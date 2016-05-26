@@ -1,0 +1,22 @@
+doctype html
+html(lang='en')
+  head
+    title Floorplan projects
+    link(rel='stylesheet' type='text/css' href='/list.css')
+
+  body.Global
+    .L-wrap.L-hidden(data-bind='css: { "L-hidden": false }')
+
+      header.TopHeader Projects
+
+      form.ArticleForm.L-push(method='POST' action='/projects.json')
+        input(placeholder='Project Name' type='text' data-bind='textInput: projectname' name='projectname')
+        input(type='submit')
+
+      .ArticleList(data-bind='foreach: projects')
+        a(data-bind='href: "/projects/" + id, value:name')
+        
+
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js')
+    script(src='/list.js')

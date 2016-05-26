@@ -1,35 +1,37 @@
 doctype html
 html(lang='en')
   head
-    title Heroku Articles
+    title Floorplan files
     link(rel='stylesheet' type='text/css' href='/list.css')
 
   body.Global
     .L-wrap.L-hidden(data-bind='css: { "L-hidden": false }')
 
-      header.TopHeader Latest Articles v2
+      header.TopHeader Files
 
-      form.ArticleForm.L-push(data-bind='submit: addArticle')
-        input(placeholder='www.url.com' data-bind='textInput: url')
-        a(data-bind='click: addArticle') Add
-        p.ArticleForm-error(data-bind='visible: error') Sorry, we were unable to parse that article.
+      form.ArticleForm.L-push(data-bind='submit: initUpload')
+        input(placeholder='Leave blank to use file name' data-bind='textInput: title')
+        input(type='file' id='file-input' data-bind='value: fakepath')
+        a(data-bind='click: initUpload') Add
+        p.ArticleForm-error(data-bind='visible: error, text:error')
 
       .ArticlePending.L-push(data-bind='visible: isPending')
 
       .ArticleList(data-bind='foreach: articles')
         .ArticleList-article
-          .ArticleList-votes
-            span(data-bind='text: votes')
-            a(data-bind='click: voteUp, css: { "L-hidden": !canVote() }') +1
-          img.ArticleList-thumb(data-bind='attr: { src: image }, css: { "L-hidden": !hasImage() }')
           .ArticleList-content
-            a.ArticleList-title(data-bind='text: title, attr: { href: url }' target='_blank')
-            p.ArticleList-topics(data-bind='text: topicList')
-            p.ArticleList-prediction
-              span(data-bind='text: minutes + "-minute read"')
-              span(data-bind='text: style')
-              span(data-bind='text: "generally " + sentiment, css: { isNegative: isNegative, isPositive: isPositive }')
+            h1(data-bind='text: title')
+            .ArticleList-original
+              h3 Original
+              img(data-bind='attr: { src: original }, visible: show')
+              p(data-bind='visible: !show') No preview for PDFs.
+            h3(data-bind='visible: thumb.length != 0') Thumb
+            .ArticleList-thumb-img(data-bind='foreach: thumb')
+              img(data-bind='attr: { src: $data }, visible: $data')
+            h3(data-bind='visible: large.length != 0') Large
+            .ArticleList-large-img(data-bind='foreach: large')
+              img(data-bind='attr: { src: $data }, visible: $data')
 
     script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
     script(src='//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js')
-    script(src='/list.js')
+    script(src='list.js')

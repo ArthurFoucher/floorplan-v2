@@ -15,13 +15,12 @@ function reset() {
 
   var articles = instance.deleteAllArticles();
   var pending = instance.purgePendingArticles();
-  var votes = instance.purgePendingVotes();
 
-  Promise.all([articles, pending, votes])
+  Promise.all([articles, pending])
     .then(onComplete);
 
   function onComplete() {
-    console.log('Articles, article queue, and votes have been reset.');
+    console.log('Articles and article queue have been reset.');
     process.exit();
   }
 }
