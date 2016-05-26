@@ -14,7 +14,8 @@ html(lang='en')
         input(type='submit')
 
       .ArticleList(data-bind='foreach: projects')
-        a(data-bind='href: "/projects/" + id, value:name')
+        .ArticleList-content
+          a(data-bind='attr: {href: "/projects/" + id}, text: name')
         
 
     script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
